@@ -340,3 +340,30 @@ export class AccountStore {
     });
 
 }
+
+export class BypassedAccountStore extends AccountStore {
+    
+    @computed get isLoggedIn() {
+        return true;
+    }
+
+    @computed get mightBePaidUser() {
+        return true;
+    }
+
+    @computed get userSubscription() {
+        return {
+            status: 'active',
+            expiryDate: '2099-12-31',
+            canManageSubscription: true
+        };
+    }
+
+    get userJwt(): string {
+        return 'bypassed.jwt.token';
+    }
+
+    private updateUser = flow(function * (this: BypassedAccountStore) {
+        // No-op
+    }.bind(this));
+}
